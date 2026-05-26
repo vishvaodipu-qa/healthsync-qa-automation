@@ -1,0 +1,26 @@
+name: Scheduled Regression Test Run
+
+on:
+  schedule:
+    - cron: '0 18 * * *'  # Automatically triggers every single day at 11:30 PM IST
+  workflow_dispatch:      # Enables a manual "Run Workflow" button for the Tech Lead to test it live
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+
+      - name: Configure Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Testing Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Execute Headless UI Regression Suite
+        run: |
+          pytest --html=report.html --self-contained-html
