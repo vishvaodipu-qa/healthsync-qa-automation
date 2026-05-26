@@ -2,7 +2,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from pages.appointment_page import AppointmentPage
+from page.appointment_page import AppointmentPage
 
 @pytest.fixture
 def driver():
