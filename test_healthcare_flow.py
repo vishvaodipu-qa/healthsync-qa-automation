@@ -40,8 +40,8 @@ def test_healthcare_appointment_booking(driver):
     driver.find_element(By.ID, "chk_hospreadmission").click()
     driver.find_element(By.ID, "radio_program_medicaid").click()
     
-    # Input Visit Date and Comments
-    driver.find_element(By.ID, "txt_visit_date").send_keys("30/05/2026")
+    # Input Visit Date using standard ISO format YYYY-MM-DD for headless Linux system consistency
+    driver.find_element(By.ID, "txt_visit_date").send_keys("2026-05-30")
     driver.find_element(By.ID, "txt_comment").send_keys("Automated Healthcare QA Regression Test Booking.")
     
     # 5. Submit the appointment form
@@ -49,7 +49,7 @@ def test_healthcare_appointment_booking(driver):
     
     # 6. Explicit Wait: Dynamically wait for the confirmation header to stabilize in DOM
     WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//h2[contains(text(), 'Confirmation')]"))
+        EC.presence_of_element_located((By.XPATH, "//h2[text()='Appointment Confirmation' or contains(text(), 'Confirmation')]"))
     )
     
     # Brief fallback sleep to ensure full text rendering under headless execution
